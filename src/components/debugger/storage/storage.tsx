@@ -3,30 +3,30 @@ import { Button } from "antd";
 
 const Storage = () => {
   const [localStorageToken, setLocalStorageToken] = useState(
-    localStorage.getItem("token") || "No token in localStorage"
+    localStorage.getItem("token") || "无"
   );
   const [sessionStorageToken, setSessionStorageToken] = useState(
-    sessionStorage.getItem("token") || "No token in sessionStorage"
+    sessionStorage.getItem("token") || "无"
   );
 
   const handleClearLocalStorage = () => {
     localStorage.removeItem("token");
-    setLocalStorageToken("No token in localStorage");
+    setLocalStorageToken("无");
   };
 
   const handleClearSessionStorage = () => {
     sessionStorage.removeItem("token");
-    setSessionStorageToken("No token in sessionStorage");
+    setSessionStorageToken("无");
   };
 
   const handleRefresh = () => {
     // 在这里执行获取更新的操作
     // 例如重新获取 localStorage 和 sessionStorage 中的 token
     setLocalStorageToken(
-      localStorage.getItem("token") || "No token in localStorage"
+      localStorage.getItem("token") || "无"
     );
     setSessionStorageToken(
-      sessionStorage.getItem("token") || "No token in sessionStorage"
+      sessionStorage.getItem("token") || "无"
     );
   };
 
@@ -36,19 +36,19 @@ const Storage = () => {
         <h3>localStorage Token:</h3>
         <p>{localStorageToken}</p>
         <Button type="primary" onClick={handleClearLocalStorage}>
-          Clear localStorage
+          清除localStorage
         </Button>
       </div>
       <div style={{ marginBottom: "20px" }}>
         <h3>sessionStorage Token:</h3>
         <p>{sessionStorageToken}</p>
         <Button type="primary" onClick={handleClearSessionStorage}>
-          Clear sessionStorage
+          清除sessionStorage
         </Button>
       </div>
       <div>
         <Button type="primary" onClick={handleRefresh}>
-          Refresh
+          刷新storage
         </Button>
       </div>
     </>

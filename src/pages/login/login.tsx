@@ -1,9 +1,9 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import "./login.css";
 
-import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { userCheck, userLogin } from "../../api/userApi";
 
 type FieldType = {
   username?: string;
@@ -17,23 +17,17 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    try {
-      axios
-        .post("/user/login", {
-          name: values.username,
-          password: values.password,
-        })
-        .then((response) => {
-          if (values.remember === true) {
-            localStorage.setItem("token", response.data["token"]);
-          } else {
-            sessionStorage.setItem("token", response.data["token"]);
-          }
-          navigate("/home");
-        });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    userLogin(
+      values.username,
+      values.password,
+      values.remember,
+      () => {
+        navigate("/home");
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -41,10 +35,8 @@ export default function Login() {
   };
 
   useEffect(() => {
-    axios.post("/user/check").then((response) => {
-      if (response.data["state"] === true) {
-        navigate("/home");
-      }
+    userCheck(() => {
+      navigate("/home");
     });
   }, [navigate]);
 

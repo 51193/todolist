@@ -4,29 +4,14 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import axios from "axios";
-import { BASE_URL } from "./react-app-env.d";
-
 import Debugger from "./components/debugger/debugger";
+import { axiosInit } from "./utils/axiosInit";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-axios.defaults.baseURL = BASE_URL;
-axios.interceptors.request.use(
-  (config) => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (token) {
-      config.headers.token = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+axiosInit()
 
 root.render(
   <React.StrictMode>
